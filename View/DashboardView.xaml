@@ -1,0 +1,82 @@
+﻿<UserControl x:Class="DashMaster.View.DashboardView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:DashMaster"
+             mc:Ignorable="d"
+             Height="Auto" Width="Auto">
+    <Grid>
+        <!-- Main Content Area -->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <!-- Takes up remaining space -->
+                <ColumnDefinition Width="Auto"/>
+                <!-- Fixed width for weather card -->
+            </Grid.ColumnDefinitions>
+
+            <!-- Weather Widget (Card) -->
+            <Border Background="#2C3E50" CornerRadius="10" Padding="10" Margin="10" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Right" Width="300">
+                <StackPanel>
+                    <TextBlock 
+                        Text="{Binding WeatherDisplay}" 
+                        Foreground="#ecf0f1" 
+                        FontSize="24" 
+                        FontWeight="Bold" 
+                        Margin="0,0,0,10"/>
+                    <!-- Replace these with actual weather data bindings -->
+                    <TextBlock Text="{Binding Weather.LocationTemp, StringFormat={}{0:F1}°C}" Foreground="#ecf0f1" FontSize="20"/>
+                </StackPanel>
+            </Border>
+
+            <!-- StreamerTracker -->
+            <ItemsControl ItemsSource="{Binding StreamersTracking}" Grid.Column="0">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal" HorizontalAlignment="Left"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Background="#1A1A1A" CornerRadius="10" Padding="20" Margin="10" Width="300">
+                            <Grid>
+                                <!-- The main card content -->
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Name}" Foreground="#e0e0e0" FontSize="20" FontWeight="Bold" Margin="0,0,0,10"/>
+                                    <TextBlock Text="{Binding StreamDuration}" Foreground="#e0e0e0" FontSize="14" TextWrapping="Wrap"/>
+                                    <Button Content="Go" Command="{Binding OpenStreamerCommand}" Background="#4A69A6" Foreground="#e0e0e0" Padding="10,5" Margin="10,10,0,0" HorizontalAlignment="Right"/>
+                                </StackPanel>
+                                <!-- The record symbols inside the grid -->
+                                <Image Source="Images/record-icon-true.png" Width="10" Height="10" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0">
+                                    <Image.Style>
+                                        <Style TargetType="Image">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsLive}" Value="True">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Image.Style>
+                                </Image>
+                                <Image Source="Images/record-icon.png" Width="10" Height="10" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0">
+                                    <Image.Style>
+                                        <Style TargetType="Image">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsLive}" Value="False">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Image.Style>
+                                </Image>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </Grid>
+    </Grid>
+</UserControl>

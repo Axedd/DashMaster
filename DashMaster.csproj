@@ -1,0 +1,41 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0-windows7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Images\dashboard.png" />
+    <None Remove="Images\home.png" />
+    <None Remove="Images\library.png" />
+    <None Remove="Images\record-icon-true.png" />
+    <None Remove="Images\record-icon.png" />
+    <None Remove="Images\settings.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Commands\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="8.0.8" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="System.Drawing.Common" Version="8.0.8" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\dashboard.png" />
+    <Resource Include="Images\home.png" />
+    <Resource Include="Images\library.png" />
+    <Resource Include="Images\record-icon-true.png" />
+    <Resource Include="Images\record-icon.png" />
+    <Resource Include="Images\settings.png" />
+  </ItemGroup>
+
+</Project>
