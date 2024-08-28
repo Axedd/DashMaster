@@ -96,7 +96,7 @@
                                         VerticalAlignment="Center">
 
                                     <!-- Button applying the LibraryButtonStyle -->
-                                    <Button Command="{Binding ClickCommand}" 
+                                    <Button Command="{Binding ExecuteAppCommand}" 
                                             CommandParameter="{Binding Path}"
                                             Style="{StaticResource LibraryButtonStyle}">
 
@@ -118,6 +118,7 @@
                                                        TextWrapping="Wrap"
                                                        FontSize="12"
                                                        Margin="5"/>
+                                            <TextBlock Text="{Binding IsRemovable}"/>
                                         </StackPanel>
                                     </Button>
                                 </Border>
@@ -129,9 +130,10 @@
 
             <!-- Buttons Panel -->
             <StackPanel Orientation="Vertical" Grid.Column="1" Grid.Row="0" Margin="10">
-                <Button Content="Open File" Command="{Binding OpenFileCommand}" Margin="5"/>
-                <Button Content="Open Folder" Command="{Binding OpenFolderCommand}" Margin="5"/>
-                <Button Content="Clear Apps" Command="{Binding ClearApplications}" Margin="5"/>
+                <Button Content="Open File" Command="{Binding OpenFileCommand}" Margin="5,5,5,20"/>
+                <Button Content="Open Folder" Command="{Binding OpenFolderCommand}" Margin="5,5,5,20"/>
+                <Button Content="Remove App" Command="{Binding MakeAppsRemoveable}" Margin="5,5,5,20"/>
+                <Button Content="Clear Apps" Command="{Binding ClearApplications}" Margin="5,5,5,20"/>
             </StackPanel>
         </Grid>
     </DockPanel>

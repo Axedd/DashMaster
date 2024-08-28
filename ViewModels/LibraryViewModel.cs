@@ -28,6 +28,7 @@ namespace DashMaster.ViewModels
         public ICommand OpenFolderCommand { get; set; }
         public ICommand OpenFileCommand { get; set; }
         public ICommand ClearApplications { get; set; }
+        public ICommand MakeAppsRemoveable {  get; set; }
 
         public LibraryViewModel()
         {
@@ -38,6 +39,7 @@ namespace DashMaster.ViewModels
             ClearApplications = new RelayCommand(param => ClearTableAndReloadApplications());
             OpenFolderCommand = new RelayCommand(param => OpenFolderCommandExecute());
             OpenFileCommand = new RelayCommand(param => OpenFileCommandExecute());
+            MakeAppsRemoveable = new RelayCommand(param => ToggleRemoveable(Applications));
         }
 
         private List<string> OpenDialogAndPaths(Func<bool?> showDialog, Func<string> getSinglePath = null, Func<IEnumerable<string>> getMultiplePaths = null)
@@ -188,6 +190,22 @@ namespace DashMaster.ViewModels
             foreach (var app in sortedApplications)
             {
                 Applications.Add(app);
+            }
+        }
+
+        private void ToggleRemoveable(object paramter)
+        {
+            bool _isRemoveable = false;
+            if (paramter is ObservableCollection<ApplicationModel> apps)
+            {
+                
+                foreach (var app in apps)
+                {
+                    // Toggles if the apps are removeable
+                    app.IsRemovable = !app.IsRemovable;
+                    _isRemoveable = app.IsRemovable;
+                }
+                Console.WriteLine(_isRemoveable);
             }
         }
 
