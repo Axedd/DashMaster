@@ -88,7 +88,7 @@ Welcome to my 30-day journey to mastering C# and .NET! Over the course of this m
 ### 🌐 **Technologies Used:**
 - **C# and .NET Core:** Core programming and backend logic.
 - **WPF (Windows Presentation Foundation):** For building the user interface.
-- **Entity Framework Core:** For managing data and interacting with the MySQL database.
+- **Entity Framework Core:** For managing data and interacting with the SQLite database.
 - **Mapbox:** For integrating weather data and location-based features in the application.
 - **Twitch API:** To track streamers' live status.
 
