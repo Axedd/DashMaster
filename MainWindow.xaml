@@ -80,37 +80,70 @@
 
         <Border Background="#1f1f1f" Grid.Row="1" Grid.Column="0">
             <StackPanel>
-                <Button Style="{StaticResource SidebarButtonStyle}">
+                <!-- Define consistent height for each Button to ensure vertical alignment -->
+                <Button Style="{StaticResource SidebarButtonStyle}" Height="60">
                     <Button.ContentTemplate>
                         <DataTemplate>
-                            <Image Source="pack://application:,,,/Images/home.png" Width="48" Height="48"/>
+                            <Grid Height="60">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="48"/>
+                                    <!-- Fixed width for the Icon column -->
+                                    <ColumnDefinition Width="100"/>
+                                    <!-- Flexible width for the Text column -->
+                                </Grid.ColumnDefinitions>
+                                <Image Source="pack://application:,,,/Images/home.png" Width="48" Height="48" VerticalAlignment="Center" Grid.Column="0"/>
+                                <TextBlock Text="Home" Foreground="White" FontSize="16" VerticalAlignment="Center" Margin="10,0,0,0" Grid.Column="1"/>
+                            </Grid>
                         </DataTemplate>
                     </Button.ContentTemplate>
                 </Button>
-                <Button Command="{Binding ShowDashboardViewCommand}" Style="{StaticResource SidebarButtonStyle}">
+
+                <Button Command="{Binding ShowDashboardViewCommand}" Style="{StaticResource SidebarButtonStyle}" Height="60">
                     <Button.ContentTemplate>
                         <DataTemplate>
-                            <Image Source="pack://application:,,,/Images/dashboard.png" Width="48" Height="48"/>
+                            <Grid Height="60">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="48"/>
+                                    <ColumnDefinition Width="100"/>
+                                </Grid.ColumnDefinitions>
+                                <Image Source="pack://application:,,,/Images/dashboard.png" Width="48" Height="48" VerticalAlignment="Center" Grid.Column="0"/>
+                                <TextBlock Text="Dashboard" Foreground="White" FontSize="16" VerticalAlignment="Center" Margin="10,0,0,0" Grid.Column="1"/>
+                            </Grid>
                         </DataTemplate>
                     </Button.ContentTemplate>
                 </Button>
-                <Button Command="{Binding ShowLibraryViewCommand}" Style="{StaticResource SidebarButtonStyle}">
+
+                <Button Command="{Binding ShowLibraryViewCommand}" Style="{StaticResource SidebarButtonStyle}" Height="60">
                     <Button.ContentTemplate>
                         <DataTemplate>
-                            <Image Source="pack://application:,,,/Images/library.png" Width="48" Height="48"/>
+                            <Grid Height="60">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="48"/>
+                                    <ColumnDefinition Width="100"/>
+                                </Grid.ColumnDefinitions>
+                                <Image Source="pack://application:,,,/Images/library.png" Width="48" Height="48" VerticalAlignment="Center" Grid.Column="0"/>
+                                <TextBlock Text="Library" Foreground="White" FontSize="16" VerticalAlignment="Center" Margin="10,0,0,0" Grid.Column="1"/>
+                            </Grid>
                         </DataTemplate>
                     </Button.ContentTemplate>
                 </Button>
-                <Button Style="{StaticResource SidebarButtonStyle}">
+
+                <Button Style="{StaticResource SidebarButtonStyle}" Height="60">
                     <Button.ContentTemplate>
                         <DataTemplate>
-                            <Image Source="pack://application:,,,/Images/settings.png" Width="48" Height="48"/>
+                            <Grid Height="60">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="48"/>
+                                    <ColumnDefinition Width="100"/>
+                                </Grid.ColumnDefinitions>
+                                <Image Source="pack://application:,,,/Images/settings.png" Width="48" Height="48" VerticalAlignment="Center" Grid.Column="0"/>
+                                <TextBlock Text="Settings" Foreground="White" FontSize="16" VerticalAlignment="Center" Margin="10,0,0,0" Grid.Column="1"/>
+                            </Grid>
                         </DataTemplate>
                     </Button.ContentTemplate>
                 </Button>
             </StackPanel>
         </Border>
-
         <Border Background="{StaticResource MainContentBackgroundBrush}" Grid.Row="1" Grid.Column="1" Padding="10">
             <ContentControl Content="{Binding CurrentView}" />
         </Border>
