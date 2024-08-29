@@ -63,7 +63,7 @@ Welcome to my 30-day journey to mastering C# and .NET! Over the course of this m
 
 - **File Management:**
   - Add, remove, and launch executable files directly from the dashboard. 
-  - **Note:** Removal of individual executables is still under development.
+  - **Note:** Removal of individual executables is still under development. ✅ 
 
 - **Weather Updates:**
   - Integration with a Weather API to provide real-time weather information for a selected location. 
@@ -71,11 +71,11 @@ Welcome to my 30-day journey to mastering C# and .NET! Over the course of this m
 
 - **Twitch Live Notifications:**
   - Track favorite Twitch streamers and receive notifications when they go live. 
-  - **Note:** Notification reception is still under development.
+  - **Note:** Notification reception is still under development. ❌
 
 - **Custom Controls:**
   - Utilize custom WPF controls to enhance the user experience. 
-  - **Note:** Custom controls are currently under development and will be added in future updates.
+  - **Note:** Custom controls are currently under development and will be added in future updates. ❌
 
 - **Data Binding:**
   - Implement data binding for dynamic UI updates. 
