@@ -56,6 +56,7 @@ namespace DashMaster.Models
             }
         }
 
+        public event Action<ApplicationModel> ApplicationDeleted;
         private void ExecuteApp(object parameter)
         {
             Console.WriteLine(parameter);
@@ -91,6 +92,8 @@ namespace DashMaster.Models
                         
                     }
                 }
+
+                ApplicationDeleted?.Invoke(this);
 
             }
         }

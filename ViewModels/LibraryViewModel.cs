@@ -175,6 +175,9 @@ namespace DashMaster.ViewModels
                             Path = reader["Path"].ToString()
                         };
 
+                        // Subscribes to each app's ApplicationDeleted event with OnApplicationDeleted 
+                        app.ApplicationDeleted += OnApplicationDeleted;
+
                         // Add the new application to the ObservableCollection
                         Applications.Add(app);
                         Applications.OrderBy(app => app.Name);
@@ -207,6 +210,13 @@ namespace DashMaster.ViewModels
                 }
                 Console.WriteLine(_isRemoveable);
             }
+        
+        }
+
+
+        private void OnApplicationDeleted(ApplicationModel app)
+        {
+            LoadApplications();
         }
 
         private void ClearTableAndReloadApplications()
