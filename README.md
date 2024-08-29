@@ -63,7 +63,7 @@ Welcome to my 30-day journey to mastering C# and .NET! Over the course of this m
 
 - **File Management:**
   - Add, remove, and launch executable files directly from the dashboard. 
-  - **Note:** Removal of individual executables is still under development.
+  - **Note:** Removal of individual executables is still under development. ✅ 
 
 - **Weather Updates:**
   - Integration with a Weather API to provide real-time weather information for a selected location. 
@@ -71,11 +71,11 @@ Welcome to my 30-day journey to mastering C# and .NET! Over the course of this m
 
 - **Twitch Live Notifications:**
   - Track favorite Twitch streamers and receive notifications when they go live. 
-  - **Note:** Notification reception is still under development.
+  - **Note:** Notification reception is still under development. ❌
 
 - **Custom Controls:**
   - Utilize custom WPF controls to enhance the user experience. 
-  - **Note:** Custom controls are currently under development and will be added in future updates.
+  - **Note:** Custom controls are currently under development and will be added in future updates. ❌
 
 - **Data Binding:**
   - Implement data binding for dynamic UI updates. 
@@ -88,7 +88,7 @@ Welcome to my 30-day journey to mastering C# and .NET! Over the course of this m
 ### 🌐 **Technologies Used:**
 - **C# and .NET Core:** Core programming and backend logic.
 - **WPF (Windows Presentation Foundation):** For building the user interface.
-- **Entity Framework Core:** For managing data and interacting with the MySQL database.
+- **Entity Framework Core:** For managing data and interacting with the SQLite database.
 - **Mapbox:** For integrating weather data and location-based features in the application.
 - **Twitch API:** To track streamers' live status.
 
