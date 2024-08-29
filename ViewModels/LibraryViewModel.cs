@@ -172,7 +172,8 @@ namespace DashMaster.ViewModels
                         {
                             Name = reader["Name"].ToString(),
                             Icon = icon,
-                            Path = reader["Path"].ToString()
+                            Path = reader["Path"].ToString(),
+                            IconPath = iconPath
                         };
 
                         // Subscribes to each app's ApplicationDeleted event with OnApplicationDeleted 

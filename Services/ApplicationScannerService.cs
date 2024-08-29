@@ -116,6 +116,7 @@ namespace DashMaster.Services
                     insertCommand.Parameters.AddWithValue("@Name", app.Name);
                     insertCommand.Parameters.AddWithValue("@Icon", app.IconPath);  // Ensure Icon is a string
                     insertCommand.Parameters.AddWithValue("@Path", app.Path);
+                    insertCommand.Parameters.AddWithValue("@IconPath", app.IconPath);
                     insertCommand.ExecuteNonQuery();
                 }
             }

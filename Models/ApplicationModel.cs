@@ -75,7 +75,8 @@ namespace DashMaster.Models
                     // Handle exceptions here
                     Console.WriteLine("Error: " + e.Message);
                 }
-            } else
+            }
+            else
             {
                 string connectionString = "Data Source=applications.db";
                 using (SqliteConnection connection = new SqliteConnection(connectionString))
@@ -87,14 +88,16 @@ namespace DashMaster.Models
                     using (SqliteCommand command = new SqliteCommand(deleteQuery, connection))
                     {
                         command.Parameters.AddWithValue("@Name", Name);
-
                         command.ExecuteNonQuery();
-                        
+
+                        if (!string.IsNullOrEmpty(IconPath) && File.Exists(IconPath))
+                        {
+                            File.Delete(IconPath);
+                        }
                     }
                 }
 
                 ApplicationDeleted?.Invoke(this);
-
             }
         }
 
