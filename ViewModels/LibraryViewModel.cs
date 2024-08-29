@@ -29,6 +29,7 @@ namespace DashMaster.ViewModels
         public ICommand OpenFileCommand { get; set; }
         public ICommand ClearApplications { get; set; }
         public ICommand MakeAppsRemoveable {  get; set; }
+        public ICommand DeleteSelectedAppsCommand { get; set; }
 
         public LibraryViewModel()
         {
@@ -39,7 +40,8 @@ namespace DashMaster.ViewModels
             ClearApplications = new RelayCommand(param => ClearTableAndReloadApplications());
             OpenFolderCommand = new RelayCommand(param => OpenFolderCommandExecute());
             OpenFileCommand = new RelayCommand(param => OpenFileCommandExecute());
-            MakeAppsRemoveable = new RelayCommand(param => ToggleRemoveable(Applications));
+            MakeAppsRemoveable = new RelayCommand(param => ToggleRemoveable());
+            DeleteSelectedAppsCommand = new RelayCommand(param => DeleteSelectedApps());
         }
 
         private List<string> OpenDialogAndPaths(Func<bool?> showDialog, Func<string> getSinglePath = null, Func<IEnumerable<string>> getMultiplePaths = null)
@@ -197,21 +199,27 @@ namespace DashMaster.ViewModels
             }
         }
 
-        private void ToggleRemoveable(object paramter)
+        private void ToggleRemoveable()
         {
-            bool _isRemoveable = false;
-            if (paramter is ObservableCollection<ApplicationModel> apps)
+            foreach (var app in Applications)
             {
-                
-                foreach (var app in apps)
+                app.IsRemovable = !app.IsRemovable;
+                if (!app.IsRemovable)
                 {
-                    // Toggles if the apps are removeable
-                    app.IsRemovable = !app.IsRemovable;
-                    _isRemoveable = app.IsRemovable;
+                    app.IsSelected = false;  // Deselect apps if we're turning off removable mode
                 }
-                Console.WriteLine(_isRemoveable);
             }
-        
+        }
+
+        private void DeleteSelectedApps()
+        {
+            var selectedApps = Applications.Where(app => app.IsSelected && app.IsRemovable).ToList();
+
+            foreach (var app in selectedApps)
+            {
+                app.DeleteApplication();
+                Applications.Remove(app);
+            }
         }
 
 

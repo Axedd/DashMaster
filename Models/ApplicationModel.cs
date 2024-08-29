@@ -15,11 +15,25 @@ namespace DashMaster.Models
     public class ApplicationModel : ViewModelBase
     {
         private bool _isRemovable { get; set; }
+        private bool _isSelected { get; set; }
 
         public string Name { get; set; }
         public string Path {  get; set; }
         public string IconPath { get; set; }
         public BitmapSource Icon { get; set; }
+        
+        public bool IsSelected
+        {
+            get => _isSelected;
+            set
+            {
+                if (_isSelected != value)
+                {
+                    _isSelected = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         public bool IsRemovable
         {
@@ -57,6 +71,8 @@ namespace DashMaster.Models
         }
 
         public event Action<ApplicationModel> ApplicationDeleted;
+
+        // Handles the app state by checking if user wants to execute the app or execute a selection for deletion
         private void ExecuteApp(object parameter)
         {
             Console.WriteLine(parameter);
@@ -78,27 +94,39 @@ namespace DashMaster.Models
             }
             else
             {
-                string connectionString = "Data Source=applications.db";
-                using (SqliteConnection connection = new SqliteConnection(connectionString))
+                SelectApplication();
+            }
+        }
+
+        private void SelectApplication()
+        {
+            _isSelected = !_isSelected;
+        }
+
+
+
+        public void DeleteApplication()
+        {
+            string connectionString = "Data Source=applications.db";
+            using (SqliteConnection connection = new SqliteConnection(connectionString))
+            {
+                connection.Open();
+
+                string deleteQuery = "DELETE FROM Applications WHERE Name = @Name";
+
+                using (SqliteCommand command = new SqliteCommand(deleteQuery, connection))
                 {
-                    connection.Open();
+                    command.Parameters.AddWithValue("@Name", Name);
+                    command.ExecuteNonQuery();
 
-                    string deleteQuery = "DELETE FROM Applications WHERE Name = @Name";
-
-                    using (SqliteCommand command = new SqliteCommand(deleteQuery, connection))
+                    if (!string.IsNullOrEmpty(IconPath) && File.Exists(IconPath))
                     {
-                        command.Parameters.AddWithValue("@Name", Name);
-                        command.ExecuteNonQuery();
-
-                        if (!string.IsNullOrEmpty(IconPath) && File.Exists(IconPath))
-                        {
-                            File.Delete(IconPath);
-                        }
+                        File.Delete(IconPath);
                     }
                 }
-
-                ApplicationDeleted?.Invoke(this);
             }
+
+            ApplicationDeleted?.Invoke(this);
         }
 
     }
