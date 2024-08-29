@@ -55,6 +55,9 @@
                         </Setter.Value>
                     </Setter>
                 </Trigger>
+                <DataTrigger Binding="{Binding IsSelected}" Value="true">
+                    <Setter Property="Background" Value="Gray"/>
+                </DataTrigger>
             </Style.Triggers>
         </Style>
     </UserControl.Resources>
@@ -75,7 +78,12 @@
             <!-- New Content in the Small Row -->
             <Border Grid.Row="0" Grid.Column="0" Padding="10" VerticalAlignment="Center">
                 <StackPanel Orientation="Horizontal">
-                    <Button Content="Remove x apps" Command="{Binding DeleteSelectedAppsCommand}" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                    <!-- Button with dynamic text showing the number of selected items -->
+                    <Button Command="{Binding DeleteSelectedAppsCommand}" 
+                Margin="0,0,10,0" 
+                VerticalAlignment="Center">
+                        <TextBlock Text="{Binding SelectedCount, StringFormat='Remove {0} apps'}"/>
+                    </Button>
                     <Button Content="Cancel" VerticalAlignment="Center"/>
                 </StackPanel>
             </Border>
@@ -128,7 +136,6 @@
                                                        TextWrapping="Wrap"
                                                        FontSize="12"
                                                        Margin="5"/>
-                                            <TextBlock Text="{Binding IsSelected}"/>
                                         </StackPanel>
                                     </Button>
                                 </Border>

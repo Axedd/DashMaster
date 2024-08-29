@@ -24,12 +24,26 @@ namespace DashMaster.ViewModels
         private readonly ApplicationScannerService _scannerService;
         public ObservableCollection<ApplicationModel> Applications { get; set; }
 
+        private int _selectedCount;
+        public int SelectedCount
+        {
+            get => _selectedCount;
+            set
+            {
+                if (_selectedCount != value)
+                {
+                    _selectedCount = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         public ICommand OpenFolderCommand { get; set; }
         public ICommand OpenFileCommand { get; set; }
         public ICommand ClearApplications { get; set; }
         public ICommand MakeAppsRemoveable {  get; set; }
         public ICommand DeleteSelectedAppsCommand { get; set; }
+
 
         public LibraryViewModel()
         {
@@ -180,6 +194,7 @@ namespace DashMaster.ViewModels
 
                         // Subscribes to each app's ApplicationDeleted event with OnApplicationDeleted 
                         app.ApplicationDeleted += OnApplicationDeleted;
+                        app.ApplicaitonSelected += UpdateSelectedCount;
 
                         // Add the new application to the ObservableCollection
                         Applications.Add(app);
@@ -209,6 +224,12 @@ namespace DashMaster.ViewModels
                     app.IsSelected = false;  // Deselect apps if we're turning off removable mode
                 }
             }
+        }
+
+        private void UpdateSelectedCount()
+        {
+            Console.WriteLine("HELLO");
+            SelectedCount = Applications.Count(app => app.IsSelected);
         }
 
         private void DeleteSelectedApps()

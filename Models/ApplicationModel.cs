@@ -71,6 +71,7 @@ namespace DashMaster.Models
         }
 
         public event Action<ApplicationModel> ApplicationDeleted;
+        public event Action ApplicaitonSelected;
 
         // Handles the app state by checking if user wants to execute the app or execute a selection for deletion
         private void ExecuteApp(object parameter)
@@ -95,12 +96,13 @@ namespace DashMaster.Models
             else
             {
                 SelectApplication();
+                ApplicaitonSelected?.Invoke();
             }
         }
 
         private void SelectApplication()
         {
-            _isSelected = !_isSelected;
+            IsSelected = !IsSelected;
         }
 
 
