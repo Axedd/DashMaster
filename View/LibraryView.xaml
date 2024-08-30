@@ -69,13 +69,60 @@
                 </DataTrigger>
             </Style.Triggers>
         </Style>
+        <Style x:Key="OptionBtn" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Name="border" Background="Gray" BorderBrush="Gray" CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                      VerticalAlignment="Center" 
+                                      RecognizesAccessKey="True"
+                                      TextBlock.Foreground="{TemplateBinding Foreground}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="DarkGray"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="MinHeight" Value="40"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="Gray"/>
+        </Style>
+        <Style x:Key="RemoveAppsBtn" BasedOn="{StaticResource OptionBtn}" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Name="border" Background="{TemplateBinding Background}" BorderBrush="Gray" CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                      VerticalAlignment="Center" 
+                                      RecognizesAccessKey="True"
+                                      TextBlock.Foreground="{TemplateBinding Foreground}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <!-- DataTrigger for a specific condition -->
+                            <DataTrigger Binding="{Binding IsRemovingApps}" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="DarkGray"/>
+                            </DataTrigger>
+                            <!-- Trigger for mouse over effect -->
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="DarkGray"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </UserControl.Resources>
 
     <DockPanel LastChildFill="True">
         <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="120"/>
+                <ColumnDefinition Width="150"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <!-- New Row Above the First Column -->
@@ -156,11 +203,12 @@
                 </ScrollViewer>
             </Border>
 
+
             <!-- Buttons Panel -->
             <StackPanel Orientation="Vertical" Grid.Column="1" Grid.Row="1" Margin="10">
-                <Button Content="Open File" Command="{Binding OpenFileCommand}" Margin="5,5,5,20"/>
-                <Button Content="Open Folder" Command="{Binding OpenFolderCommand}" Margin="5,5,5,20"/>
-                <Button Content="Remove App" Command="{Binding MakeAppsRemoveable}" Margin="5,5,5,20"/>
+                <Button Content="Import File" Command="{Binding OpenFileCommand}" Style="{StaticResource OptionBtn}" Margin="5,5,5,20"/>
+                <Button Content="Import Folder" Command="{Binding OpenFolderCommand}" Style="{StaticResource OptionBtn}" Margin="5,5,5,20"/>
+                <Button Content="Remove App(s)" Command="{Binding MakeAppsRemoveable}" Style="{StaticResource RemoveAppsBtn}" Margin="5,5,5,20"/>
             </StackPanel>
         </Grid>
     </DockPanel>
