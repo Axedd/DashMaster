@@ -60,6 +60,15 @@
                 </DataTrigger>
             </Style.Triggers>
         </Style>
+        <Style x:Key="RemoveSection" TargetType="Button">
+            <Setter Property="Visibility" Value="Hidden"/>
+            <Style.Triggers>
+                <!-- Show button when IsRemovingApps is true -->
+                <DataTrigger Binding="{Binding IsRemovingApps}" Value="True">
+                    <Setter Property="Visibility" Value="Visible"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
     </UserControl.Resources>
 
     <DockPanel LastChildFill="True">
@@ -81,10 +90,12 @@
                     <!-- Button with dynamic text showing the number of selected items -->
                     <Button Command="{Binding DeleteSelectedAppsCommand}" 
                 Margin="0,0,10,0" 
-                VerticalAlignment="Center">
+                VerticalAlignment="Center"
+                             Style="{StaticResource RemoveSection}">
                         <TextBlock Text="{Binding SelectedCount, StringFormat='Remove {0} apps'}"/>
                     </Button>
-                    <Button Content="Cancel" VerticalAlignment="Center"/>
+                    <Button Content="Cancel" VerticalAlignment="Center"
+                             Style="{StaticResource RemoveSection}"/>
                 </StackPanel>
             </Border>
 
@@ -150,7 +161,6 @@
                 <Button Content="Open File" Command="{Binding OpenFileCommand}" Margin="5,5,5,20"/>
                 <Button Content="Open Folder" Command="{Binding OpenFolderCommand}" Margin="5,5,5,20"/>
                 <Button Content="Remove App" Command="{Binding MakeAppsRemoveable}" Margin="5,5,5,20"/>
-                <Button Content="Clear Apps" Command="{Binding ClearApplications}" Margin="5,5,5,20"/>
             </StackPanel>
         </Grid>
     </DockPanel>

@@ -23,6 +23,7 @@ namespace DashMaster.ViewModels
     {
         private readonly ApplicationScannerService _scannerService;
         public ObservableCollection<ApplicationModel> Applications { get; set; }
+        private bool _isRemovingApps;
 
         private int _selectedCount;
         public int SelectedCount
@@ -34,6 +35,20 @@ namespace DashMaster.ViewModels
                 {
                     _selectedCount = value;
                     OnPropertyChanged();
+                }
+            }
+        }
+
+        public bool IsRemovingApps
+        {
+            get => _isRemovingApps;
+            set
+            {
+                if (_isRemovingApps != value)
+                {
+                    _isRemovingApps = value;
+                    Console.WriteLine($"HELLO {_isRemovingApps}");
+                    OnPropertyChanged(nameof(IsRemovingApps));
                 }
             }
         }
@@ -216,9 +231,19 @@ namespace DashMaster.ViewModels
 
         private void ToggleRemoveable()
         {
+
+            if (IsRemovingApps)
+            {
+                IsRemovingApps = false;
+            } else
+            {
+                IsRemovingApps = true;
+            }
+
             foreach (var app in Applications)
             {
                 app.IsRemovable = !app.IsRemovable;
+                
                 if (!app.IsRemovable)
                 {
                     app.IsSelected = false;  // Deselect apps if we're turning off removable mode
@@ -240,6 +265,8 @@ namespace DashMaster.ViewModels
             {
                 app.DeleteApplication();
                 Applications.Remove(app);
+                IsRemovingApps = false;
+                UpdateSelectedCount();
             }
         }
 
