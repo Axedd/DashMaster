@@ -48,10 +48,10 @@
                                     <Button Content="Go" Command="{Binding OpenStreamerCommand}" Background="#4A69A6" Foreground="#e0e0e0" Padding="10,5" Margin="10,10,0,0" HorizontalAlignment="Right"/>
                                 </StackPanel>
                                 <!-- The record symbols inside the grid -->
-                                <Image Source="Images/record-icon-true.png" Width="10" Height="10" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0">
+                                <Image Source="/Images/record-icon-true.png" Width="10" Height="10" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0">
                                     <Image.Style>
                                         <Style TargetType="Image">
-                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Setter Property="Visibility" Value="Hidden"/>
                                             <Style.Triggers>
                                                 <DataTrigger Binding="{Binding IsLive}" Value="True">
                                                     <Setter Property="Visibility" Value="Visible"/>
@@ -60,10 +60,10 @@
                                         </Style>
                                     </Image.Style>
                                 </Image>
-                                <Image Source="Images/record-icon.png" Width="10" Height="10" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0">
+                                <Image Source="/Images/record-icon.png" Width="10" Height="10" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0">
                                     <Image.Style>
                                         <Style TargetType="Image">
-                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Setter Property="Visibility" Value="Hidden"/>
                                             <Style.Triggers>
                                                 <DataTrigger Binding="{Binding IsLive}" Value="False">
                                                     <Setter Property="Visibility" Value="Visible"/>

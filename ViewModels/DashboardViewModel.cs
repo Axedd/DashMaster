@@ -1,42 +1,46 @@
 ﻿using DashMaster.Models;
 using DashMaster.MVVM;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Navigation;
-using Microsoft.Extensions.Caching.Memory;
 using System.Windows.Threading;
+using DashMaster.Services;
 
 namespace DashMaster.ViewModels
 {
     public class DashboardViewModel : ViewModelBase
     {
         private readonly TrackWeather _trackWeather;
-        private DispatcherTimer timer;
+        private readonly DispatcherTimer _timer;
+
         public RelayCommand OpenStreamerCommand { get; set; }
 
         private ObservableCollection<StreamerItem> _streamersTracking;
-        public TrackWeather trackWeather {  get; set; }
-        private WeatherItem _weather;
-
-        private string _streamerToAdd;
-
-        public TrackStreamerTime TrackStreamerTime { get; set; }
         public ObservableCollection<StreamerItem> StreamersTracking
         {
             get => _streamersTracking;
             set
             {
-                _streamersTracking = value; 
-                OnPropertyChanged(); 
+                _streamersTracking = value;
+                OnPropertyChanged();
             }
         }
 
+        private WeatherItem _weather;
+        public WeatherItem Weather
+        {
+            get => _weather;
+            set
+            {
+                _weather = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(WeatherDisplay));
+            }
+        }
+
+        private string _streamerToAdd;
         public string StreamerToAdd
         {
             get => _streamerToAdd;
@@ -62,52 +66,33 @@ namespace DashMaster.ViewModels
             }
         }
 
-        public WeatherItem Weather
-        {
-            get => _weather;
-            set
-            {
-                _weather = value;
-                OnPropertyChanged();
-                OnPropertyChanged(nameof(WeatherDisplay));
-            }
-        }
         public string WeatherDisplay => $"{Weather?.LocationName} - {CurrentTime}";
+
+        // Added TrackStreamerTime property
+        public TrackStreamerTime TrackStreamerTime { get; private set; }
 
         public DashboardViewModel(TrackWeather trackWeather)
         {
-
-            Console.WriteLine("HELLO FROM CONSTRUCTOR");
-            TrackStreamerTime = new TrackStreamerTime();
-            StreamersTracking = new ObservableCollection<StreamerItem>();
             _trackWeather = trackWeather;
+            TrackStreamerTime = new TrackStreamerTime(); // Instantiate TrackStreamerTime
+            StreamersTracking = new ObservableCollection<StreamerItem>();
             Weather = new WeatherItem();
+            _timer = InitializeTimer();
 
-            AddStreamer("Bendixboy");
-            AddStreamer("Aarimous");
+            // Add streamers
+            AddInitialStreamers();
+            InitializeWeatherAsync().ConfigureAwait(false);
+        }
 
-            InitializeAsync().ConfigureAwait(false);
-
-            CurrentTime = DateTime.Now.ToString("HH:mm");
-
-            timer = new DispatcherTimer
+        private DispatcherTimer InitializeTimer()
+        {
+            var timer = new DispatcherTimer
             {
                 Interval = TimeSpan.FromSeconds(1)
             };
             timer.Tick += Timer_Tick;
             timer.Start();
-        }
-
-        private async Task InitializeAsync()
-        {
-            await InitializeWeatherAsync();
-            
-        }
-
-
-        private async Task InitializeWeatherAsync()
-        {
-            Weather = await _trackWeather.GetWeatherData("Aarhus");
+            return timer;
         }
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -115,18 +100,35 @@ namespace DashMaster.ViewModels
             CurrentTime = DateTime.Now.ToString("HH:mm");
         }
 
+        private async Task InitializeWeatherAsync()
+        {
+            Weather = await _trackWeather.GetWeatherData("Aarhus");
+        }
+
+        private void AddInitialStreamers()
+        {
+            AddStreamer("Bendixboy").ConfigureAwait(false);
+            AddStreamer("Aarimous").ConfigureAwait(false);
+        }
+
         public async Task AddStreamer(string streamerName)
         {
+            // Ensure TrackStreamerTime is instantiated before using it
             string streamDuration = await TrackStreamerTime.StreamerTime(streamerName);
             bool isLive = !streamDuration.Contains("offline");
 
-            StreamersTracking.Add(new StreamerItem
+            StreamersTracking.Add(CreateStreamerItem(streamerName, isLive, streamDuration));
+        }
+
+        private StreamerItem CreateStreamerItem(string streamerName, bool isLive, string streamDuration)
+        {
+            return new StreamerItem
             {
                 Name = streamerName,
                 IsLive = isLive,
                 StreamDuration = streamDuration,
                 OpenStreamerCommand = new RelayCommand(param => OpenStreamerInBrowser(streamerName)) // Assign the command
-            });
+            };
         }
 
         private void OpenStreamerInBrowser(string streamerName)
@@ -138,8 +140,5 @@ namespace DashMaster.ViewModels
             };
             System.Diagnostics.Process.Start(sInfo);
         }
-
-
-
     }
 }

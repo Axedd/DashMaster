@@ -14,5 +14,6 @@ namespace DashMaster.Models
         public string StreamDuration { get; set; }
 
         public ICommand OpenStreamerCommand { get; set; }
+
     }
 }
